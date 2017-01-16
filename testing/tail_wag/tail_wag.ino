@@ -10,20 +10,24 @@ void loop() {
   delay(500);
   wagTailSlow(3, 120);
   delay(2000);
-}
+  }
 
 void wagTailSlow(int speed, int degrees) {
-  for (int i = 0; i < degrees / 2; i++) {
+  // TODO:
+  // Use millis() instead of delay so the board does not wait until
+  // done and can maintain cencor activity.
+  
+  for (int i = 0; i <= degrees / 2; i += 5) {
     tail.write(90 - i);
-    delay(speed);
+    delay(5 * speed);
   }
-  for (int i = 0; i < degrees; i++) {
+  for (int i = 0; i <= degrees; i += 5) {
     tail.write(90 - degrees / 2 + i);
-    delay(speed);
+    delay(5 * speed);
   }
-  for (int i = degrees / 2; i >= 0; i--) {
+  for (int i = degrees / 2; i >= 0; i -= 5) {
     tail.write(90 + i);
-    delay(speed);
+    delay(5 * speed);
   }
 }
 
