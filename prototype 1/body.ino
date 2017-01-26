@@ -22,14 +22,14 @@ enum State: byte {
 State state;
 
 void setup() {
-  lf_elbow.attach(12);
-  lf_knee.attach(13);
-  rf_elbow.attach(9);
-  rf_knee.attach(8);
-  rb_elbow.attach(10);
-  rb_knee.attach(11);
-  lb_elbow.attach(7);
-  lb_knee.attach(6);
+  rf_elbow.attach(12);
+  rf_knee.attach(13);
+  lf_elbow.attach(9);
+  lf_knee.attach(8);
+  lb_elbow.attach(10);
+  lb_knee.attach(11);
+  rb_elbow.attach(7);
+  rb_knee.attach(6);
 
   pinMode(tiltSensor, INPUT);
   pinMode(crashLed, OUTPUT);
@@ -37,12 +37,17 @@ void setup() {
   state = STANDING;
   initialized = false;
   digitalWrite(crashLed, HIGH);
+
+  while (!initialized) {
+    if (shouldInitialize()) {
+      initialize();
+    } 
+  }
 }
 
 void loop() {
-  if (shouldInitialize()) {
-    initialize();
-  }
+  delay(2000);
+  stand();
 }
 
 bool shouldInitialize() {
@@ -58,14 +63,24 @@ void initialize() {
 }
 
 void stand() {
-  rf_elbow.write(70);
-  rf_knee.write(20);
-  lf_elbow.write(90);
+  lf_elbow.write(80);
   lf_knee.write(20);
+  rf_elbow.write(90);
+  rf_knee.write(20);
   
-  lb_elbow.write(80);
-  lb_knee.write(20);
-  rb_elbow.write(80);
+  rb_elbow.write(90);
   rb_knee.write(20);
+  lb_elbow.write(90);
+  lb_knee.write(20);
+}
+
+void raiseLeftFrontFoot() {
+  int elbow = 70;
+  int knee = 20;
+  for (int i = 0; i < 50; i++) {
+    lf_elbow.write(elbow + i);
+    lf_knee.write(knee + i);
+    delay(15);
+  }
 }
 
