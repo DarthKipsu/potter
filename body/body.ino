@@ -13,8 +13,9 @@ Servo rb_knee;  // Right back knee
 const int tiltSensor = 53;
 const int crashLed = 22;
 
+bool initialized;
+
 enum State: byte {
-  FALLEN,
   STANDING,
 };
 
@@ -33,24 +34,27 @@ void setup() {
   pinMode(tiltSensor, INPUT);
   pinMode(crashLed, OUTPUT);
   
-  state = FALLEN; // requires human to place the robot standing at first
+  state = STANDING;
+  initialized = false;
+  digitalWrite(crashLed, HIGH);
 }
 
 void loop() {
-  if (state == FALLEN && digitalRead(tiltSensor) == LOW) {
-    stand();
-    if (digitalRead(tiltSensor) == LOW) {
-      state = STANDING;
-    }
-  } else if (digitalRead(tiltSensor) == HIGH) {
-    state = FALLEN;
+  if (shouldInitialize()) {
+    initialize();
   }
+}
 
-  if (state == FALLEN) {
-    digitalWrite(crashLed, HIGH);
-  } else {
-    digitalWrite(crashLed, LOW);
-  }
+bool shouldInitialize() {
+  return !initialized && digitalRead(tiltSensor) == LOW;
+}
+
+void initialize() {
+  stand();
+  state = STANDING;
+  digitalWrite(crashLed, LOW);
+  initialized = true;
+  delay(1000);
 }
 
 void stand() {
