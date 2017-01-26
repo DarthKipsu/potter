@@ -1,4 +1,5 @@
 #include <Servo.h>
+#include <Arduino.h>
 Servo rf_elbow; // Right front elbow
 Servo rf_knee;  // Right front knee
 Servo lf_elbow; // Left front elbow
@@ -9,6 +10,16 @@ Servo lb_knee;  // Left back knee
 Servo rb_elbow; // Right back elbow
 Servo rb_knee;  // Right back knee
 
+const int tiltSensor = 53;
+const int crashLed = 22;
+
+enum State: byte {
+  FALLEN,
+  STANDING,
+};
+
+State state;
+
 void setup() {
   lf_elbow.attach(12);
   lf_knee.attach(13);
@@ -18,10 +29,28 @@ void setup() {
   rb_knee.attach(11);
   lb_elbow.attach(7);
   lb_knee.attach(6);
+
+  pinMode(tiltSensor, INPUT);
+  pinMode(crashLed, OUTPUT);
+  
+  state = FALLEN; // requires human to place the robot standing at first
 }
 
 void loop() {
-  stand();
+  if (state == FALLEN && digitalRead(tiltSensor) == LOW) {
+    stand();
+    if (digitalRead(tiltSensor) == LOW) {
+      state = STANDING;
+    }
+  } else if (digitalRead(tiltSensor) == HIGH) {
+    state = FALLEN;
+  }
+
+  if (state == FALLEN) {
+    digitalWrite(crashLed, HIGH);
+  } else {
+    digitalWrite(crashLed, LOW);
+  }
 }
 
 void stand() {
