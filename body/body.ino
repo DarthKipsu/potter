@@ -14,9 +14,8 @@ void setup() {
 void loop() {
   stand();
   delay(2000);
-  step_forward(1);
+  turn_left(5);
   delay(1000);
-  sit();
-  delay(1000);
+  turn_right(5);
 }
 

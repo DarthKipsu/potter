@@ -33,6 +33,74 @@ void step_forward(int steps) {
   }
 }
 
+void turn_left(int steps) {
+  for (int step = 0; step < steps; step++) {
+    withdraw_front_leg_left(20);
+    for (int i = 0; i < 30; i++) {
+      lift_back_leg_right(i);
+      lift_back_leg_left(i);
+      withdraw_front_leg_right(i);
+      delay(2);
+    }
+    delay(100);
+    for (int i = 30; i > 0; i--) {
+      lift_back_leg_right(i);
+      lift_back_leg_left(i);
+      withdraw_front_leg_right(i);
+      delay(2);
+    }
+    for (int i = 0; i < 30; i++) {
+      lift_front_leg_right(i);
+      withdraw_back_leg_right(i);
+      withdraw_back_leg_left(i);
+      delay(2);
+    }
+    delay(100);
+    for (int i = 30; i > 0; i--) {
+      lift_front_leg_right(i);
+      withdraw_back_leg_right(i);
+      withdraw_back_leg_left(i);
+      delay(2);
+    }
+    stand();
+    delay(10);
+  }
+}
+
+void turn_right(int steps) {
+  for (int step = 0; step < steps; step++) {
+    withdraw_front_leg_right(20);
+    for (int i = 0; i < 30; i++) {
+      lift_back_leg_right(i);
+      lift_back_leg_left(i);
+      withdraw_front_leg_left(i);
+      delay(2);
+    }
+    delay(100);
+    for (int i = 30; i > 0; i--) {
+      lift_back_leg_right(i);
+      lift_back_leg_left(i);
+      withdraw_front_leg_left(i);
+      delay(2);
+    }
+    for (int i = 0; i < 30; i++) {
+      lift_front_leg_left(i);
+      withdraw_back_leg_right(i);
+      withdraw_back_leg_left(i);
+      delay(2);
+    }
+    delay(100);
+    for (int i = 30; i > 0; i--) {
+      lift_front_leg_left(i);
+      withdraw_back_leg_right(i);
+      withdraw_back_leg_left(i);
+      delay(2);
+    }
+    stand();
+    delay(10);
+  }
+}
+
 /** Makes the robot sit down */
 void sit() {
   stand();
@@ -43,7 +111,7 @@ void sit() {
 }
 
 /** Moves left front and right back leg forwards to given degrees and
-/*  withdraws the other two legs to the same degree. **/
+  /*  withdraws the other two legs to the same degree. **/
 void step_with_left_leg(int degree) {
   lift_front_leg_left(degree);
   lift_back_leg_right(degree);
@@ -52,7 +120,7 @@ void step_with_left_leg(int degree) {
 }
 
 /** Moves right front and left back leg forwards to given degrees and
-/*  withdraws the other two legs to the same degree. **/
+  /*  withdraws the other two legs to the same degree. **/
 void step_with_right_leg(int degree) {
   lift_front_leg_right(degree);
   lift_back_leg_left(degree);
