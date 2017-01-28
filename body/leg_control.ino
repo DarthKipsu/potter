@@ -33,6 +33,13 @@ void step_forward(int steps) {
   }
 }
 
+/** Makes the robot sit down */
+void sit() {
+  stand();
+  lift_back_leg_right(90);
+  lift_back_leg_left(90);
+}
+
 /** Moves left front and right back leg forwards to given degrees and
 /*  withdraws the other two legs to the same degree. **/
 void step_with_left_leg(int degree) {

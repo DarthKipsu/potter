@@ -15,5 +15,8 @@ void loop() {
   stand();
   delay(2000);
   step_forward(2);
+  delay(1000);
+  sit();
+  delay(1000);
 }
 
