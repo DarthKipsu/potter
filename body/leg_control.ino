@@ -38,6 +38,8 @@ void sit() {
   stand();
   lift_back_leg_right(90);
   lift_back_leg_left(90);
+  withdraw_front_leg_right(40);
+  withdraw_front_leg_left(40);
 }
 
 /** Moves left front and right back leg forwards to given degrees and
